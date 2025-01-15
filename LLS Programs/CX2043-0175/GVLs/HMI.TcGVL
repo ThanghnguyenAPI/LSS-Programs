@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.14">
+  <GVL Name="HMI" Id="{a7ebe64b-ed79-4e6b-8c18-d275db246094}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+
+{region Buttons}
+	//Operational Controls-------
+	//Run Button
+	runButton : BOOL;
+	//Stop Button
+	stopButton : BOOL;
+	//Reset Button
+	resetButton : BOOL;
+	//Calibration Mode Button - Only display with maintenance authentication
+	calibButton : BOOL;
+	//Auto/Manual Mode
+	autoManualMode : BOOL;
+{endregion}
+	 
+{region System Status}
+	//Overall system status--------------
+	//System ready
+	sysReady : BOOL;
+	//System error
+	sysError : BOOL;
+	//System running
+	sysRunning : BOOL;
+{endregion}
+
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

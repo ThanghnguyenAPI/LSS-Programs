@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.14">
+  <DUT Name="BuzzerType" Id="{713c46c8-1c3d-46af-923c-8ac08de764ec}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE BuzzerType :
+(
+	ONCE := 0,
+	CYCLE,
+	OFF
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

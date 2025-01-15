@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.14">
+  <GVL Name="Alarm" Id="{259505cc-ac4d-481a-8835-dac148f721b8}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL CONSTANT
+	//Setting constants alarm range
+	
+	//Loadcell sensor S13
+	minAlarm_loadcell : UINT := 0;
+	maxAlarm_loadcell : UINT := 240; //[TBD]
+	
+	//Material tray sensor S24
+	maxAlarm_finishTray : UINT := 80; //[TBD]
+	
+	
+END_VAR
+
+VAR_GLOBAL
+	//General alarm
+	
+	//Material tray alarm-----------------------------------------------------
+	
+	//Material tray installation sensor
+	materialTray_notInstalled : BOOL ; //sensor S0
+	materialTray_empty 		  : BOOL ; //sensor S1 & S2
+	
+	//Cylinder C1 sensor
+	cylinderC1_retractTimeout : BOOL ; //Sensor S3
+	cylinderC1_extractTimeout : BOOL ; //Sensor S4
+	
+	//Cylinder C2 sensor
+	cylinderC2_retractTimeout : BOOL ; //Sensor S6
+	cylinderC2_extractTimeout : BOOL ; //Sensor S5
+	
+	//Cylinder C3 sensor
+	cylinderC3_retractTimeout : BOOL ; //Sensor S8
+	cylinderC3_extractTimeout : BOOL ; //Sensor S7
+	
+	//Material counting S9 sensor
+	materialCover_countingSensor : BOOL ; //Sensor S9
+	
+	
+	
+	//Feeder alarm -----------------------------------------------------------
+	
+	//Material in position of roller M1
+	feederSensor_rollerM1 : BOOL ; //Sensor S12
+	
+	//Roller M1
+	rollerM1_error : BOOL ; //Error from roller M1 controller
+	
+	//Cylinder C5
+	cylinderC5_extractTimeout : BOOL ; //Sensor S14
+	cylinderC5_retractTimeout : BOOL ; //Sensor S15
+	
+	
+	
+	//Stripping alarm--------------------------------------------------------
+	
+	//Cylinder C6
+	cylinderC6_extractTimeout : BOOL ; //Sensor S16
+	cylinderC6_retractTimeout : BOOL ; //Sensor S17
+	
+	//Material in position of roller M2
+	feederSensor_RollerM2 : BOOL ; //Sensor S20
+	
+	//Roller M2
+	rollerM2_error : BOOL ; //Error from roller M2 controller
+	
+	//CO2 lazer error
+	lazerCO2_error : BOOL ; //Error from CO2 lazer
+	
+	//UV lazer error
+	lazerUV_error  : BOOL ; //Error from UV lazer
+	
+	
+	
+	//Grinding alarm--------------------------------------------------------
+	
+	//Roller M3
+	rollerM3_error : BOOL ; //Error from roller M3 controller
+	
+	//Cylinder C7
+	cylinderC7_extractTimeout : BOOL ; //Sensor S18
+	cylinderC7_retractTimeout : BOOL ; //Sensor S19
+	
+	//Cylinder C8
+	cylinderC8_extractTimeout : BOOL ; //Sensor S25
+	cylinderC8_retractTimeout : BOOL ; //Sensor S26
+	
+	//Gripper roller M4
+	grindingPosition_timeout : BOOL ; //Sensor S21
+	//Gripper position
+	gripperPosition_timeout  : BOOL ; //Sensor S22
+	//Home position
+	homePosition_timeout     : BOOL ; //Sensor S23
+	//Roller M4
+	rollerM4_error           : BOOL ; //Error from roller M4 controller
+	
+	//Slider error
+	//Idle position
+	idleSLIR_timeout     : BOOL ; //Sensor S27 at waiting position
+	//Grinding position
+	grindingSLIR_timeout : BOOL ; //Sensor S10 at grinding & gripping position
+	//Home position
+	homeSLIR_timeout     : BOOL ; //Sensor S11 at home position
+	//Slider
+	SLIR_error           : BOOL ; //Slider error from controller
+	
+	//Finish good tray
+	finishGoodTray_timeout : BOOL ; //Sensor S24 - analog error when timeout (after TBD cycle)
+	
+	
+	
+	//Frame alarm-----------------------------------------------------------
+	
+	//EMS button
+	buttonEMS_pressed : BOOL ; //EMS button is active status
+	
+	//Left door interlock
+	leftDoorOpening_timeout : BOOL ; //Left door opening timeout
+	leftDoorLock_timeout    : BOOL ; //Left door lock timeout
+	
+	//Right door interlock
+	rightDoorOpening_timeout : BOOL ; //Right door opening timeout
+	rightDoorLock_timeout    : BOOL ; //Right door lock timeout
+	
+	//[TBD]High air-pressure level
+	//highAirPressure_alarm : BOOL ; //Current air-pressure over operation range
+	//[TBD]Low air-pressure level
+	//lowAirPressure_alarm  : BOOL ; //Current air-pressure lower operation range
+	
+	//Safety relay
+	safetyRelay_active : BOOL ; //Safety relay active
+	
+	
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

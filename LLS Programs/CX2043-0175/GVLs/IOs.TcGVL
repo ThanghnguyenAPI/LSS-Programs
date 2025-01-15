@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.14">
+  <GVL Name="IOs" Id="{e167d0c3-c1b1-41ef-b77c-504bf6929f59}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+///Inputs ================================================================================================================================================================
+	
+	///Digital ********************************************************
+	
+	//Operation Control Buttons
+	//Start Push Button
+	startButton AT %I* : BOOL;
+	
+	//Stop Push Button
+	stopButton AT %I* : BOOL;
+	
+	//Reset Push Button
+	resetButton AT %I* : BOOL;
+	
+	//E-Stop Status : True if OK, False is E-Stop is enabled
+	eStop AT %I* : BOOL;
+	
+	
+	// Feeder and Stripping Section -----------------------------------
+	
+	//Material tray installation sensor
+	S0 AT %I* : BOOL;
+	
+	//Counting material cover sensor
+	S9 AT %I* : BOOL;
+	
+	//Material in position roller M1 sensor
+	S12 AT %I* : BOOL;
+	
+	// Materials in tray sensor
+	S1 AT %I* : BOOL;
+	S2 AT %I* : BOOL;
+	
+	// Cylinder C1 : Position sensor
+	// Cylinder C1 retract
+	S4 AT %I* : BOOL;
+	// Cylinder C1 extract
+	S3 AT %I* : BOOL;
+	
+	// Cylinder C2 and C3 : Position sensor
+	// Cylinder C2 and C3 extract
+	S5 AT %I* : BOOL;
+	S7 AT %I* : BOOL;
+	// Cylinder C2 and C3 retract
+	S6 AT %I* : BOOL;
+	S8 AT %I* : BOOL;
+
+	// Cylinder C5 : Position sensor
+	// Cylinder C5 extract
+	S14 AT %I* : BOOL;
+	// Cylinder C5 retract
+	S15 AT %I* : BOOL;
+	
+	// Cylinder C6 : Position sensor
+	// Cylinder C6 retract
+	S16 AT %I* : BOOL;
+	// Cylinder C6 extract
+	S17 AT %I* : BOOL;
+	
+	
+	// Grinding Section -----------------------------------------------
+
+	//Slider position sensor
+	//Grinding position sensor
+	S10 AT %I* : BOOL;
+	//Stripping position sensor
+	S11 AT %I* : BOOL;
+	
+	// Cylinder C7 retract
+	S18 AT %I* : BOOL;
+	// Cylinder C7 extract
+	S19 AT %I* : BOOL;
+	
+	//Material in position roller M3
+	S20 AT %I* : BOOL;
+
+	//Swing arm position sensors
+	//Home position sensor
+	S21 AT %I* : BOOL;
+	
+	//Grinding position sensor
+	S22 AT %I* : BOOL;
+	
+	//Extract finish good position sensor
+	S23 AT %I* : BOOL;
+
+	//System Input----------------------------------------------------
+	
+	//Left Door Interlock
+	//Door interlock left: left door open (open = 1; close = 0)
+	LDO AT %I* : BOOL;
+	//Door interlock left: left door locked (unlock = 1; locked = 0)
+	LDL AT %I* : BOOL;
+	
+	//Right Door Interlock
+	//Door interlock right: right door open (open = 1; close = 0)
+	RDO AT %I* : BOOL;
+	//Door interlock right: right door locked (unlock = 1; locked = 0)
+	RDL AT %I* : BOOL;
+	
+	//Lazer Control Input
+	//UV Lazer running
+	UV_Running AT %I* : BOOL;
+	//UV Lazer finish
+	UV_Finish AT %I* : BOOL;
+	//UV Lazer error
+	UV_Error AT %I* : BOOL;
+	
+	//CO2 Lazer running
+	CO2_Running AT %I* : BOOL;
+	//CO2 Lazer finish
+	CO2_Finish AT %I* : BOOL;
+	//CO2 Lazer error
+	CO2_Error AT %I* : BOOL;
+
+	//Electrical cabinet limit switch
+	//AC Cabinet limit switch
+	AC_Limit AT %I* : BOOL;
+	
+	//DC Cabinet limit switch
+	DC_Limit AT %I* : BOOL;
+	
+	//Air pressure sensor
+	highLevelPressure  AT %I* : BOOL;
+	howLevelPressure   AT %I* : BOOL;
+	
+	//Safety relay status
+	safetyRelay_Status AT %I* : BOOL;
+	
+	
+	///Analog ********************************************************
+	//EL3124 output values:
+	// 4 mA -  0
+	// 12 mA - 16383
+	// 20 mA - 32767
+	S13_Loadcell AT %I* : INT; //grinding loadcell
+	S24_Analog 	 AT %I* : INT; //finish good material tray
+	
+	//Grinding loadcell sensor
+	S13 AT %I* : INT;
+	
+	// Finish good tray sensor
+	S24 AT %I* : INT;
+
+
+///Outputs ===============================================================================================================================================================
+	
+	///Digital ********************************************************
+	
+	//1. Lazer control
+	ena_UVLazer       AT %Q* : BOOL;
+	ena_CO2Lazer      AT %Q* : BOOL;
+	
+	//2. Cylinder control
+	cylinderC1_Extract   AT %Q* : BOOL;
+	cylinderC1_Retract   AT %Q* : BOOL;
+	cylinderC2n3_Extract AT %Q* : BOOL;
+	cylinderC2n3_Retract AT %Q* : BOOL;
+	cylinderC5_Extract   AT %Q* : BOOL;
+	cylinderC5_Retract   AT %Q* : BOOL;
+	cylinderC6_Extract   AT %Q* : BOOL;
+	cylinderC6_Retract   AT %Q* : BOOL;
+	cylinderC7_Extract   AT %Q* : BOOL;
+	cylinderC7_Retract   AT %Q* : BOOL;
+	cylinderC8_Extract   AT %Q* : BOOL;
+	cylinderC8_Retract   AT %Q* : BOOL;
+	
+	//3. Fume fan control
+	fumeFan  AT %Q* : BOOL;
+	
+	//4. Illuminated control buttons
+	illuminatedStart  AT %Q* : BOOL;
+	illuminatedStop   AT %Q* : BOOL;
+	
+	///Safety Control Digital Output
+
+	//1. Light Tower
+    lightTowerRed     AT %Q* : BOOL;
+    lightTowerYellow  AT %Q* : BOOL;
+    lightTowerGreen	  AT %Q* : BOOL;
+	lightTowerBuzzer  AT %Q* : BOOL;
+	
+	//2. Safety relay activate
+	safetyRelayActive  AT %Q* : BOOL;
+	
+	//3. Door interlock
+	lock_LeftDoor   AT %Q* : BOOL;
+	lock_RightDoor  AT %Q* : BOOL;
+	
+	//4. 
+	
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

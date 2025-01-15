@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.14">
+  <POU Name="FB_Loadcell" Id="{b287fecc-d9c4-42de-b80b-88bebab88afa}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Loadcell
+VAR_INPUT
+    analogInput : INT;       
+    timeSpan : TIME := T#50MS; //Sample time
+END_VAR
+
+VAR_OUTPUT
+    filteredOutput : REAL; 
+END_VAR
+
+VAR
+    buffer : ARRAY[1..100] OF INT; //Array to save input value to buffer memory
+    bufferIndex : INT := 1;        //Current index to specify next value for register
+    lastUpdateTime : TIME;
+    currentTime : TIME;
+    sum : LREAL := 0;              // Sum of input value
+    count : INT := 0;
+	sysTimeGet: TIME;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF NOT (sysTimeGet(currentTime) = 0) THEN
+    // Check the passed time from last update
+    IF (currentTime - lastUpdateTime) >= timeSpan THEN
+        // Save new value to buffer memory
+        sum := sum - buffer[bufferIndex]; //Remove old value from buffer memory
+        buffer[bufferIndex] := analogInput; // Regist new value to buffer memory
+        sum := sum + analogInput; // + new value to buffer memory
+
+        // update buffer index
+        bufferIndex := bufferIndex + 1;
+        IF bufferIndex > 100 THEN
+            bufferIndex := 1; // return to first value of buffer memory
+        END_IF;
+
+        //update number of value in buffer memory
+        IF count < 100 THEN
+            count := Count + 1;
+        END_IF;
+
+        
+        filteredOutput := REAL(sum) / REAL(count);
+
+        // update time
+        lastUpdateTime := currentTime;
+    END_IF;
+END_IF;
+]]></ST>
+    </Implementation>
+    <LineIds Name="FB_Loadcell">
+      <LineId Id="70" Count="25" />
+      <LineId Id="69" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.14">
+  <DUT Name="ST_ErrorEntry" Id="{efe7c612-b910-4bd1-af34-3d45a8f984a0}">
+    <Declaration><![CDATA[TYPE ST_ErrorEntry :
+STRUCT
+	tTimestamp : DT;
+	nErrCode : UDINT;
+	sSeverity : STRING(10);	
+	sMsg : T_MaxString;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

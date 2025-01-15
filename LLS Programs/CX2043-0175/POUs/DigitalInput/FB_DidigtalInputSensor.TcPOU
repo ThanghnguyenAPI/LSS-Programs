@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.14">
+  <POU Name="FB_DidigtalInputSensor" Id="{a033c98f-67b5-4571-aca6-6455c4e13572}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_DigitalInputSensor
+VAR_INPUT
+	on : BOOL;
+	inTime : TIME;
+	
+END_VAR
+
+VAR_OUTPUT
+	digitalFiltered : BOOL;
+END_VAR
+VAR
+	tOnGetTime : TON;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[tOnGetTime(PT := inTime);
+IF on THEN
+	tOnGetTime.IN := TRUE;
+	IF tOnGetTime.Q THEN
+		digitalFiltered := TRUE;
+	ELSE digitalFiltered := FALSE;
+	END_IF
+ELSE tOnGetTime.IN := FALSE;
+END_IF
+]]></ST>
+    </Implementation>
+    <LineIds Name="FB_DidigtalInputSensor">
+      <LineId Id="23" Count="0" />
+      <LineId Id="25" Count="1" />
+      <LineId Id="28" Count="1" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.14">
+  <POU Name="FB_Alarm" Id="{783ca431-c2ae-4a1a-b212-5b740a356f66}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Alarm
+VAR_INPUT
+	
+	//Error/Warning from devices
+	safetyRelay : BOOL;
+	sensorTimeout : BOOL;
+	actuatorWarning : BOOL;
+	controllerWarning : BOOL;
+	
+END_VAR
+
+VAR_OUTPUT
+	//Enable system when no error and disable system when error
+	sysEnable : BOOL;
+	sysHome : BOOL;
+	
+END_VAR
+
+VAR
+	//Operation status to devices
+	stopCase : BOOL;
+	resetCase : BOOL;
+	runCase : BOOL;
+	homing : BOOL;
+	
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//When safety relay active -> stop system and reset system when back to run status.
+IF safetyRelay THEN
+	stopCase := TRUE;
+	sysEnable := FALSE;
+	homing := TRUE;
+ELSIF homing AND NOT safetyRelay THEN
+	sysHome := TRUE;
+	resetCase := TRUE;
+	sysEnable := TRUE;
+	homing := FALSE;
+ELSIF NOT safetyRelay AND NOT homing THEN
+	sysHome := FALSE;
+END_IF
+
+//When sensor timeout -> stop system and continue to run when back to run status.
+IF sensorTimeout OR actuatorWarning OR controllerWarning THEN
+	sysEnable := FALSE;
+	stopCase := TRUE;
+ELSE sysEnable := TRUE; runCase := TRUE;
+END_IF]]></ST>
+    </Implementation>
+    <Method Name="cylinders" Id="{873f6f2d-74fc-4261-a5bc-9c8f56fb6bbc}">
+      <Declaration><![CDATA[METHOD cylinders : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="detectSensors" Id="{5b8ca9e6-36bc-4628-83bb-cda62996a70c}">
+      <Declaration><![CDATA[METHOD detectSensors : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="doorInterlock" Id="{b2fe8759-b8a5-4536-843e-2e9a4e6f9227}">
+      <Declaration><![CDATA[METHOD doorInterlock : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="safetyRelay" Id="{80c48fdf-cfc9-40b0-b1b5-913f6976a038}">
+      <Declaration><![CDATA[METHOD safetyRelay : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="slider" Id="{396c523d-3740-4243-ab9c-2ec9866fc747}">
+      <Declaration><![CDATA[METHOD slider : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_Alarm">
+      <LineId Id="41" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="37" Count="2" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="42" Count="1" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="52" Count="1" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="54" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Alarm.cylinders">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Alarm.detectSensors">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Alarm.doorInterlock">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Alarm.safetyRelay">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Alarm.slider">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

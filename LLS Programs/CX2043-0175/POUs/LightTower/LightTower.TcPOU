@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.14">
+  <POU Name="LightTower" Id="{2c593cba-f84e-45ba-b8d7-0707f38b1983}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK LightTower
+VAR_INPUT
+	buzzerMute : BOOL := FALSE;
+	cycle_light_time 	: TIME 		:= T#1S;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	m_red   		: BOOL		:= FALSE;
+	m_yellow 		: BOOL		:= FALSE;
+	m_green 		: BOOL		:= FALSE;
+	m_buzzer  		: BOOL		:= FALSE;
+	
+	flash_light 	: BOOL := TRUE;
+	flash_buzzer 	: BOOL := TRUE;
+	
+	timer_light 	: TON;
+
+	timer_cyclebuzzer	: TON;
+	cycle_buzzer_time 	: TIME 		:= T#3S;
+	
+	timer_oncebuzzer	: TON;
+	once_buzzer_time 	: TIME 		:= T#0.5S;
+	
+	enableCycleBuzzer 	: BOOL;
+	enableOnceBuzzer 	: BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// flash light
+timer_light(IN := TRUE, PT := cycle_light_time);
+IF timer_light.Q THEN
+	flash_light := NOT flash_light;
+	timer_light(IN := FALSE);
+END_IF
+
+// cycle buzzer 
+IF enableCycleBuzzer THEN
+	timer_cyclebuzzer(IN := TRUE, PT := cycle_buzzer_time);
+	IF timer_cyclebuzzer.Q THEN
+		flash_buzzer := NOT flash_buzzer;
+		timer_cyclebuzzer(IN := FALSE);
+	END_IF
+ELSE
+	flash_buzzer := TRUE;
+	timer_cyclebuzzer(IN := FALSE);
+END_IF
+
+//once buzzer
+IF enableOnceBuzzer THEN
+	timer_oncebuzzer(IN := TRUE, PT := once_buzzer_time);
+	IF timer_oncebuzzer.Q THEN
+		runBuzzer(BuzzerType.OFF,once_buzzer_time);
+		enableOnceBuzzer := FALSE;
+		timer_oncebuzzer(IN := FALSE);
+	END_IF
+END_IF
+
+IF buzzerMute THEN
+	m_buzzer := FALSE;
+END_IF
+/////////////////
+onCycle();
+]]></ST>
+    </Implementation>
+    <Method Name="onCycle" Id="{73fb16a9-0765-407a-9eb7-20be197bc5c6}">
+      <Declaration><![CDATA[METHOD PRIVATE onCycle : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IOs.lightTowerRed   	:= m_red;
+IOs.lightTowerYellow := m_yellow;
+IOs.lightTowerGreen 	:= m_green;
+IOs.lightTowerBuzzer := m_buzzer;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="runBuzzer" Id="{514e1e40-68b2-440f-9f79-0e3b21c68178}">
+      <Declaration><![CDATA[METHOD PUBLIC runBuzzer : BOOL
+VAR_INPUT
+	//enable  : BOOL;
+	event : BuzzerType;
+	timeBuzzer : TIME;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[cycle_buzzer_time := timeBuzzer;
+IF NOT buzzerMute THEN
+	IF event = BuzzerType.CYCLE THEN
+		m_buzzer := flash_buzzer;
+		enableCycleBuzzer := TRUE;
+		enableOnceBuzzer := FALSE;
+	ELSIF event = BuzzerType.ONCE THEN
+		m_buzzer := TRUE;
+		enableCycleBuzzer := FALSE;
+		enableOnceBuzzer := TRUE;
+	ELSIF event = BuzzerType.OFF THEN
+		enableCycleBuzzer := FALSE;
+		enableOnceBuzzer := FALSE;
+		m_buzzer := FALSE;
+	END_IF
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="runGreenLight" Id="{d433524b-dc78-4e72-9f5c-37d0baebb368}">
+      <Declaration><![CDATA[METHOD PUBLIC runGreenLight : BOOL
+VAR_INPUT
+	enable  : BOOL;
+	event 	: LightType := LightType.ON;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF event = LightType.FLASH AND enable THEN
+	m_green := flash_light;//flash
+ELSE
+	m_green := enable;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="runRedLight" Id="{6b0c8ace-e93d-4f8f-a7bb-c8a61d474b6a}">
+      <Declaration><![CDATA[METHOD PUBLIC runRedLight : BOOL
+VAR_INPUT
+	enable  : BOOL;
+	event 	: LightType := LightType.ON;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF event = LightType.FLASH AND enable THEN
+	m_red := flash_light;//flash
+ELSE
+	m_red := enable;
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="runYellowLight" Id="{0259c667-bd60-41bb-96fc-f516a164e506}">
+      <Declaration><![CDATA[METHOD PUBLIC runYellowLight : BOOL
+VAR_INPUT
+	enable  : BOOL;
+	event 	: LightType := LightType.ON;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF event = LightType.FLASH AND enable THEN
+	m_yellow := flash_light;//flash;
+ELSE
+	m_yellow := enable;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="LightTower">
+      <LineId Id="3" Count="27" />
+      <LineId Id="61" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="62" Count="1" />
+      <LineId Id="32" Count="1" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="LightTower.onCycle">
+      <LineId Id="3" Count="2" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="LightTower.runBuzzer">
+      <LineId Id="30" Count="0" />
+      <LineId Id="3" Count="13" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="LightTower.runGreenLight">
+      <LineId Id="3" Count="3" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="LightTower.runRedLight">
+      <LineId Id="3" Count="4" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="LightTower.runYellowLight">
+      <LineId Id="3" Count="3" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.14">
+  <POU Name="MAIN" Id="{71b4f007-c74f-4713-8031-06c83cc6195e}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+
+VAR
+	//S1 : digitalInputSensor;
+	temp_S : BOOL;
+	digitalInputSensor: INT;
+	materialTrayInstallationSensor: INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//S1();
+//S1(on := IOs.S1, inTime := T#50MS, digitalFiltered => temp_S);
+
+//digitalInputSensor.materialTrayInstallationSensor(temp_S);
+
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="2" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="15" Count="1" />
+      <LineId Id="12" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

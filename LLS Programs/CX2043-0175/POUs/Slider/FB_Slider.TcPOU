@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.14">
+  <POU Name="FB_Slider" Id="{981876b1-819e-49a2-9856-6ba956b93924}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Slider
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+ ]]></ST>
+    </Implementation>
+    <LineIds Name="FB_Slider">
+      <LineId Id="10" Count="0" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
