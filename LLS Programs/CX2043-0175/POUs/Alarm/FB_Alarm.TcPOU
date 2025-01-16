@@ -47,6 +47,7 @@ IF sensorTimeout OR actuatorWarning OR controllerWarning THEN
 	sysEnable := FALSE;
 	stopCase := TRUE;
 ELSE sysEnable := TRUE; runCase := TRUE;
+	
 END_IF]]></ST>
     </Implementation>
     <Method Name="cylinders" Id="{873f6f2d-74fc-4261-a5bc-9c8f56fb6bbc}">
@@ -110,6 +111,7 @@ END_VAR
       <LineId Id="52" Count="1" />
       <LineId Id="58" Count="0" />
       <LineId Id="55" Count="0" />
+      <LineId Id="84" Count="0" />
       <LineId Id="54" Count="0" />
     </LineIds>
     <LineIds Name="FB_Alarm.cylinders">
