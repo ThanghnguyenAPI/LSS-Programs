@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.14">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.13">
   <POU Name="FB_Alarm" Id="{783ca431-c2ae-4a1a-b212-5b740a356f66}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Alarm
 VAR_INPUT
@@ -47,8 +47,9 @@ IF sensorTimeout OR actuatorWarning OR controllerWarning THEN
 	sysEnable := FALSE;
 	stopCase := TRUE;
 ELSE sysEnable := TRUE; runCase := TRUE;
-	
-END_IF]]></ST>
+END_IF
+
+// Truong Test Folk]]></ST>
     </Implementation>
     <Method Name="cylinders" Id="{873f6f2d-74fc-4261-a5bc-9c8f56fb6bbc}">
       <Declaration><![CDATA[METHOD cylinders : BOOL
@@ -56,7 +57,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[//comments]]></ST>
+        <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
     <Method Name="detectSensors" Id="{5b8ca9e6-36bc-4628-83bb-cda62996a70c}">
@@ -111,8 +112,9 @@ END_VAR
       <LineId Id="52" Count="1" />
       <LineId Id="58" Count="0" />
       <LineId Id="55" Count="0" />
-      <LineId Id="84" Count="0" />
       <LineId Id="54" Count="0" />
+      <LineId Id="85" Count="0" />
+      <LineId Id="84" Count="0" />
     </LineIds>
     <LineIds Name="FB_Alarm.cylinders">
       <LineId Id="5" Count="0" />
